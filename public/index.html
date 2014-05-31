@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<style>
+	#buttons {
+		list-style: none;
+		padding: 0;
+		width: 10em;
+		margin: 1em auto;
+	}
+
+	#buttons > li {
+		margin: 0.5em 0;
+	}
+
+	#buttons > li > button {
+		width: 100%;
+	}
+</style>
+<ul id=buttons>
+	<li><button type=button id=off>Off</button></li>
+	<li><button type=button id=on>On</button></li>
+	<li><button type=button id=night>Night</button></li>
+	<li><button type=button id=bright>Bright</button></li>
+</ul>
+<script src="zepto.min.js"></script>
+<script>
+
+ 
+var presets = {
+	night: { luminance: 0x3000, whiteColour: 1 },
+	bright: { luminance: 0x8000, whiteColour: 1 }
+};
+
+var lifx = {
+	color: function(color) {
+		$.post('/color', $.extend({ fadeTime: 2000 }, color));
+	},
+	off: function(color) { $.post('/off'); },
+	on: function(color) { $.post('/on'); }
+}
+
+off.addEventListener('click', function() {
+	lifx.off();
+});
+
+on.addEventListener('click', function() {
+	lifx.on();
+});
+
+night.addEventListener('click', function() {
+	lifx.color(presets.night);
+});
+
+bright.addEventListener('click', function() {
+	lifx.color(presets.bright);
+});
+
+</script>
